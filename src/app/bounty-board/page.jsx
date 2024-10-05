@@ -16,6 +16,10 @@ export default function BountyBoard() {
   const [loading, setLoading] = useState(true); // State for loading status
   const [error, setError] = useState(null); // State for handling errors
 
+  const handlePostSubmit = (bounty) => {
+    setSelectedPost(bounty);
+  };
+
   const handleClosePost = () => {
     setSelectedPost(null);
   };
