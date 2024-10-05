@@ -20,7 +20,7 @@ export const useBountyContract = () => {
           const signer = await provider.getSigner();
 
           // Set up contract instance
-          const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
+          const contractAddress = "0x9DA4e2D13e36764D9fEf990Ac3a58A8Cb97066E6";
           const contract = new ethers.Contract(contractAddress, abi, signer);
 
           setProvider(provider);
