@@ -6,13 +6,15 @@ cloudinary.config({
   api_secret: "pUACbcUmOz7l41NUUXFJHjQvEK4", // Avoid exposing sensitive keys in frontend code
 });
 
-export async function POST(req, res) {
+export async function POST(req) {
   try {
-    // Get the image URL from the request body
+    // Parse the request body to get the image URL
     const { imageUrl } = await req.json();
 
     if (!imageUrl) {
-      return res.status(400).json({ error: "Image URL is required" });
+      return new Response(JSON.stringify({ error: "Image URL is required" }), {
+        status: 400,
+      });
     }
 
     // Upload the image to Cloudinary
@@ -20,13 +22,12 @@ export async function POST(req, res) {
       public_id: "shoes", // You can adjust this or make it dynamic
     });
 
-    // Optimize the image URL with auto format and quality
+    // Generate optimized image URLs
     const optimizedUrl = cloudinary.url("shoes", {
       fetch_format: "auto",
       quality: "auto",
     });
 
-    // Auto crop the image
     const autoCropUrl = cloudinary.url("shoes", {
       crop: "auto",
       gravity: "auto",
@@ -34,15 +35,20 @@ export async function POST(req, res) {
       height: 500,
     });
 
-    return res.status(200).json({
-      uploadResult,
-      optimizedUrl,
-      autoCropUrl,
-    });
+    // Return the results
+    return new Response(
+      JSON.stringify({
+        uploadResult,
+        optimizedUrl,
+        autoCropUrl,
+      }),
+      { status: 200 }
+    );
   } catch (error) {
     console.error(error);
-    return res
-      .status(500)
-      .json({ error: "Failed to upload and process the image." });
+    return new Response(
+      JSON.stringify({ error: "Failed to upload and process the image." }),
+      { status: 500 }
+    );
   }
 }
