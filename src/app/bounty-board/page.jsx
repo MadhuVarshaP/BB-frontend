@@ -1,14 +1,15 @@
 "use client";
-import Navbar from "@/components/Navbar";
-import Card from "@/components/Card";
-import Footer from "@/components/Footer";
-import line from "@/public/line.png";
+
+import line from "../../public/line.png";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import Popup from "@/components/Popup";
+import Popup from "../components/Popup";
 import Link from "next/link";
 import axios from "axios"; // Import axios for making API calls
 import Data from "@/components/Data";
+import Navbar from "../components/Navbar";
+import Card from "../components/Card";
+import Footer from "../components/Footer";
 
 export default function BountyBoard() {
   const [selectedPost, setSelectedPost] = useState(null);

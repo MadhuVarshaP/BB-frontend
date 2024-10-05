@@ -13,7 +13,7 @@ import verify from "../public/verify.png";
 import transparent from "../public/transparent.png";
 import Link from "next/link";
 import { Poppins } from "next/font/google";
-import Footer from "@/components/Footer";
+import Footer from "../components/Footer";
 
 const poppins = Poppins({
   subsets: ["latin"],
