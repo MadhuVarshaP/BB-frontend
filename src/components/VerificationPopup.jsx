@@ -2,8 +2,10 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import axios from "axios";
+import { useBountyContract } from "@/app/hooks/useBountyContract";
 
 const VerificationPopup = ({ isOpen, onClose, bounty }) => {
+  const { contract } = useBountyContract();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   console.log(isOpen, bounty);
@@ -21,6 +23,9 @@ const VerificationPopup = ({ isOpen, onClose, bounty }) => {
           verified: true,
         }
       );
+
+      const tx = await contract.verifyTask(bounty.taskID, true);
+      await tx.wait();
 
       if (response.status === 200) {
         console.log("Task verified successfully:", response.data);

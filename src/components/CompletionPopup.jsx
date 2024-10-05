@@ -2,8 +2,10 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import axios from "axios";
+import { useBountyContract } from "@/app/hooks/useBountyContract";
 
 const CompletionPopup = ({ bounty, isOpen, onClose }) => {
+  const { contract } = useBountyContract();
   const [proofDescription, setProofDescription] = useState("");
   const [proofFile, setProofFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -39,6 +41,9 @@ const CompletionPopup = ({ bounty, isOpen, onClose }) => {
           },
         }
       );
+
+      const tx = await contract.completeTask(bounty.taskID, proofDescription);
+      await tx.wait();
 
       if (response.status === 200) {
         console.log("Proof submitted successfully:", response.data);

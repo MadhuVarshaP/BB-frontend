@@ -26,6 +26,9 @@ const Popup = ({ bounty, onClose }) => {
         }
       );
 
+      const tx = await contract.claimTask(bounty.taskID);
+      await tx.wait();
+
       if (response.status === 200) {
         setIsClaimed(true);
         console.log("Bounty claimed successfully:", response.data);
