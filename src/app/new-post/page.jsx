@@ -10,6 +10,8 @@ import { useRouter } from "next/navigation";
 
 import { ethers, hexlify, parseEther, toNumber } from "ethers";
 import { useBountyContract } from "../hooks/useBountyContract";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 function NewPost() {
   const { address } = useAccount();
@@ -57,6 +59,7 @@ function NewPost() {
 
       const timestamp = Math.floor(new Date(deadline).getTime() / 1000);
       const bountyInWei = parseEther(bounty);
+
       // Call the smart contract to create a task
       console.log(
         "Creating task on blockchain...",
@@ -65,6 +68,7 @@ function NewPost() {
         bountyInWei,
         timestamp
       );
+
       const tx = await contract.createTask(
         taskTitle,
         taskDescription,
@@ -84,9 +88,8 @@ function NewPost() {
       );
 
       for (const log of receipt.logs) {
-        // Check if the log matches the TaskCreated event
         if (log.topics[0] === eventSignatureHash) {
-          taskID = toNumber(log.topics[1]); // Extract taskID from the first indexed topic
+          taskID = toNumber(log.topics[1]); // Extract taskID
           break;
         }
       }
@@ -116,16 +119,17 @@ function NewPost() {
       );
 
       console.log("Task created successfully:", response.data);
-      route.push("/bounty-board");
-      // Handle successful task creation, e.g., redirect or show success message
+      toast.success("Task created successfully!");
+      route.push("/bounty-board"); // Redirect to the bounty board
     } catch (error) {
       console.error("Error creating task:", error);
-      // Optionally, handle error display to the user
+      toast.error("Error creating task. Please try again.");
     }
   };
 
   return (
     <div className="bg-black min-h-screen font-poppins">
+      <ToastContainer />
       <Navbar />
 
       <div className="flex flex-col items-center mt-10">

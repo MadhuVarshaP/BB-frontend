@@ -10,6 +10,8 @@ import { useAccount } from "wagmi";
 import { useRouter } from "next/navigation";
 import WorldIDconnect from "@/components/WorldIDconnect";
 import { useBountyContract } from "../hooks/useBountyContract";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Onboard() {
   const { address } = useAccount();
@@ -80,9 +82,9 @@ function Onboard() {
   };
 
   const handleRegisterUser = async () => {
-    // Assuming you get wallet address from useAccount or another source
     if (!address) {
       console.error("Wallet address is missing");
+      toast.error("Please connect your wallet.");
       return;
     }
 
@@ -111,16 +113,17 @@ function Onboard() {
       await tx.wait();
 
       console.log("User registered successfully:", response.data);
+      toast.success("User registered successfully!");
       route.push("/bounty-board");
-      // Handle successful registration (e.g., redirect, show a success message, etc.)
     } catch (error) {
       console.error("Error registering user:", error);
-      // Optionally, handle error display to the user
+      toast.error("Error registering user. Please try again.");
     }
   };
 
   return (
     <div className="bg-black min-h-screen font-poppins text-white">
+      <ToastContainer />
       <Navbar />
 
       <div className="flex flex-col items-center mt-10">

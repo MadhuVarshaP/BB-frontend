@@ -4,39 +4,49 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useAccount } from "wagmi";
 import { useBountyContract } from "@/app/hooks/useBountyContract";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Popup = ({ bounty, onClose }) => {
   const { contract } = useBountyContract();
-  const [isClaimed, setIsClaimed] = useState(false); // State to track claim status
-  const [loading, setLoading] = useState(false); // Loading state
-  const [error, setError] = useState(null); // Error state
+  const [isClaimed, setIsClaimed] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const { address } = useAccount();
 
   if (!bounty) return null;
 
   const handleClaimBounty = async () => {
+    const userConfirmed = window.confirm(
+      "Are you sure you want to claim this bounty?"
+    );
+    if (!userConfirmed) return; // Early exit if user cancels confirmation.
+
     setLoading(true);
     setError(null);
 
     try {
+      // First, register claim on the backend
       const response = await axios.post(
         "https://bb-backend-eight.vercel.app/api/tasks/claimTask",
         {
           taskID: bounty.taskID,
-          claimantWalletAddress: address, // Replace this with dynamic wallet address
+          claimantWalletAddress: address,
         }
       );
 
+      // Then call the smart contract to claim the bounty
       const tx = await contract.claimTask(bounty.taskID);
       await tx.wait();
 
       if (response.status === 200) {
         setIsClaimed(true);
-        console.log("Bounty claimed successfully:", response.data);
+        toast.success("Bounty claimed successfully!"); // Notify on success
       }
     } catch (err) {
       console.error("Error claiming bounty:", err);
       setError("Failed to claim bounty. Please try again.");
+      toast.error("Failed to claim bounty. Please try again."); // Notify on error
     } finally {
       setLoading(false);
     }
@@ -44,6 +54,7 @@ const Popup = ({ bounty, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm">
+      <ToastContainer /> {/* Toast Container for notifications */}
       <div className="bg-[#BEBCB9] text-black p-6 rounded-lg max-w-lg w-full mx-4">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold">{bounty.taskTitle}</h2>
