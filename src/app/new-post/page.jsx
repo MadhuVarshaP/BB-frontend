@@ -7,8 +7,9 @@ import axios from "axios";
 import line from "@/public/line.png";
 import { useAccount } from "wagmi";
 import { useRouter } from "next/navigation";
-import { useBountyContract } from "@/hooks/useBountyContract";
+
 import { ethers, hexlify, parseEther, toNumber } from "ethers";
+import { useBountyContract } from "../hooks/useBountyContract";
 
 function NewPost() {
   const { address } = useAccount();
