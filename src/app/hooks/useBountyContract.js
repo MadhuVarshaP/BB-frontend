@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
-import { abi } from "@/config/contract";
+import { abi } from "../../config/contract";
 
 export const useBountyContract = () => {
   const [contract, setContract] = useState(null);

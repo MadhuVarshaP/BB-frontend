@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import VerificationPopup from "@/components/VerificationPopup"; // Assuming you already have this component
+import VerificationPopup from "../components/VerificationPopup"; // Assuming you already have this component
 
 const PostCard = ({
   title,

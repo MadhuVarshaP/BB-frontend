@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import axios from "axios";
 import { useAccount } from "wagmi";
-import { useBountyContract } from "@/app/hooks/useBountyContract";
+import { useBountyContract } from "../app/hooks/useBountyContract";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

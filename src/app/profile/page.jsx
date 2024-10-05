@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import line from "@/public/line.png";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import line from "../../public/line.png";
 import Image from "next/image";
 import { useAccount } from "wagmi";
 

@@ -1,14 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 import Image from "next/image";
 import axios from "axios"; // Import Axios
-import illustration from "@/public/Illustration.png";
-import line from "@/public/line.png";
+import illustration from "../../public/Illustration.png";
+import line from "../../public/line.png";
 import { useAccount } from "wagmi";
 import { useRouter } from "next/navigation";
-import WorldIDconnect from "@/components/WorldIDconnect";
 import { useBountyContract } from "../hooks/useBountyContract";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import TaskCard from "@/components/TaskCard";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import TaskCard from "../../components/TaskCard";
 import Image from "next/image";
-import line from "@/public/line.png";
+import line from "../../public/line.png";
 import { useAccount } from "wagmi";
 
 export default function MyTasks() {

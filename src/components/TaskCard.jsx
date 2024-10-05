@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CompletionPopup from "@/components/CompletionPopup";
+import CompletionPopup from "../components/CompletionPopup";
 import Image from "next/image";
 
 const TaskCard = ({ title, description, bounty, deadline, image, taskID }) => {
