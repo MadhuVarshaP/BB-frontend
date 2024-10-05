@@ -2,9 +2,10 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { WagmiProvider, cookieToInitialState } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { config } from "@/config";
+// import { config } from "@/config";
 import WagmiProviderComp from "@/context/wagmi-provider";
 import { headers } from "next/headers";
+import config from "config";
 
 const queryClient = new QueryClient();
 
