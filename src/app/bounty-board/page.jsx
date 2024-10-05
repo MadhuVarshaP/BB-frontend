@@ -8,16 +8,13 @@ import { useEffect, useState } from "react";
 import Popup from "@/components/Popup";
 import Link from "next/link";
 import axios from "axios"; // Import axios for making API calls
+import Data from "@/components/Data";
 
 export default function BountyBoard() {
   const [selectedPost, setSelectedPost] = useState(null);
   const [bounties, setBounties] = useState([]); // State to hold fetched bounties
   const [loading, setLoading] = useState(true); // State for loading status
   const [error, setError] = useState(null); // State for handling errors
-
-  const handlePostSubmit = (bounty) => {
-    setSelectedPost(bounty);
-  };
 
   const handleClosePost = () => {
     setSelectedPost(null);
@@ -68,23 +65,26 @@ export default function BountyBoard() {
           </Link>
         </div>
 
-        <div className="mt-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {bounties.map((bounty) => (
-            <Card
-              key={bounty.taskID} // Assuming taskID is unique
-              id={bounty.taskID} // Pass the taskID to Card component
-              title={bounty.taskTitle} // Assuming taskTitle exists in fetched data
-              image={bounty.coverImage} // Assuming coverImage exists in fetched data
-              description={bounty.taskDescription} // Assuming taskDescription exists in fetched data
-              deadline={new Date(bounty.deadline).toLocaleDateString()} // Format date as needed
-              bountyCount={bounty.bounty} // Assuming bounty exists in fetched data
-              address={bounty.creatorWalletAddress} // Assuming creatorWalletAddress exists in fetched data
-              contact={bounty.contact} // Assuming contact exists in fetched data
-              onClaim={() => handlePostSubmit(bounty)}
-            />
-          ))}
+        <div className="bg-black rounded-lg p-5 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {bounties.map((bounty) => (
+              <Card
+                key={bounty.taskID}
+                id={bounty.taskID}
+                title={bounty.taskTitle}
+                image={bounty.coverImage}
+                description={bounty.taskDescription}
+                deadline={new Date(bounty.deadline).toLocaleDateString()}
+                bountyCount={bounty.bounty}
+                address={bounty.creatorWalletAddress}
+                contact={bounty.contact}
+                onClaim={() => handlePostSubmit(bounty)}
+              />
+            ))}
+          </div>
         </div>
       </div>
+      {/* <Data /> */}
 
       <div className="flex justify-center my-[100px]">
         <Image src={line} alt="line" width={150} />

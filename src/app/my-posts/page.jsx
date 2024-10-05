@@ -67,6 +67,7 @@ export default function MyPosts() {
               image={post.coverImage} // Assuming coverImage exists in fetched data
               walletAddress={post.claimantWalletAddress}
               proofDescription={post.proofData}
+              verificationStatus={post.verificationStatus}
               taskID={post.taskID}
               onComplete={() => handleComplete(post.taskID)} // Handle post completion
             />

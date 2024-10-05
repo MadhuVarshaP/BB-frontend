@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import { useAccount } from "wagmi";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
+import { useAccount } from "wagmi";
 
 const Navbar = () => {
   const { open } = useWeb3Modal();

@@ -15,9 +15,13 @@
 //   },
 // });
 
-import { defaultWagmiConfig } from "@web3modal/wagmi/dist/types/exports";
+// import { defaultWagmiConfig } from "@web3modal/wagmi/dist/types/exports";
+// import { cookieStorage, createStorage } from "wagmi";
+// import { scrollSepolia, sepolia } from "wagmi/chains";
+
+import { defaultWagmiConfig } from "@web3modal/wagmi";
+import { scrollSepolia, sepolia } from "viem/chains";
 import { cookieStorage, createStorage } from "wagmi";
-import { scrollSepolia, sepolia } from "wagmi/chains";
 
 export const projectId = "daf39d9657871b2275a60f6d47f4504d";
 

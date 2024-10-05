@@ -8,16 +8,22 @@ import illustration from "@/public/Illustration.png";
 import line from "@/public/line.png";
 import { useAccount } from "wagmi";
 import { useRouter } from "next/navigation";
+import WorldIDconnect from "@/components/WorldIDconnect";
+import { useBountyContract } from "../hooks/useBountyContract";
 
 function Onboard() {
   const { address } = useAccount();
+  const { contract } = useBountyContract();
   const route = useRouter();
   const [name, setName] = useState("");
   const [profilePicture, setProfilePicture] = useState(null);
-  // Replace with actual wallet address when connected
-  const [proof, setProof] = useState(""); // Placeholder for Worldcoin proof if necessary
   const [profilePictureUrl, setProfilePictureUrl] = useState("");
-  console.log(address);
+  const [userType, setUserType] = useState("User");
+
+  const handleOffsetSubmit = async (e) => {
+    if (e) e.preventDefault();
+    console.log(e, "Submited");
+  };
 
   const handleUploadProfilePicture = async () => {
     if (!profilePicture) return;
@@ -91,6 +97,12 @@ function Onboard() {
         }
       );
 
+      const worldcoinID = "asdadc";
+
+      // Call the registerUser function on the smart contract
+      const tx = await contract.registerUser(worldcoinID, name, uploadedImages);
+      await tx.wait();
+
       console.log("User registered successfully:", response.data);
       route.push("/bounty-board");
       // Handle successful registration (e.g., redirect, show a success message, etc.)
@@ -148,15 +160,13 @@ function Onboard() {
               Upload Profile Picture
             </button>
 
+            <WorldIDconnect
+              userType={userType}
+              onSuccessCallback={handleOffsetSubmit}
+            />
             <button
               onClick={handleRegisterUser}
               className="w-full py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-semibold hover:opacity-90 transition"
-            >
-              Verify with Worldcoin
-            </button>
-            <button
-              onClick={handleRegisterUser}
-              className="w-full py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-semibold hover:opacity-90 transition mt-4"
             >
               Create User
             </button>

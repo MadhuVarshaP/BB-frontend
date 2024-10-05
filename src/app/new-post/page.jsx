@@ -7,9 +7,12 @@ import axios from "axios";
 import line from "@/public/line.png";
 import { useAccount } from "wagmi";
 import { useRouter } from "next/navigation";
+import { useBountyContract } from "@/hooks/useBountyContract";
+import { ethers, hexlify, parseEther, toNumber } from "ethers";
 
 function NewPost() {
   const { address } = useAccount();
+  const { contract } = useBountyContract();
   const route = useRouter();
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
@@ -51,15 +54,57 @@ function NewPost() {
         uploadedImageUrl = await uploadImageToCloudinary();
       }
 
+      const timestamp = Math.floor(new Date(deadline).getTime() / 1000);
+      const bountyInWei = parseEther(bounty);
+      // Call the smart contract to create a task
+      console.log(
+        "Creating task on blockchain...",
+        taskTitle,
+        taskDescription,
+        bountyInWei,
+        timestamp
+      );
+      const tx = await contract.createTask(
+        taskTitle,
+        taskDescription,
+        bountyInWei,
+        timestamp,
+        {
+          value: bountyInWei, // Sending the bounty as the value in the transaction
+          gasLimit: 300000,
+        }
+      );
+      const receipt = await tx.wait();
+      console.log(receipt);
+
+      let taskID = null;
+      const eventSignatureHash = ethers.id(
+        "TaskCreated(uint256,string,address,uint256,uint256)"
+      );
+
+      for (const log of receipt.logs) {
+        // Check if the log matches the TaskCreated event
+        if (log.topics[0] === eventSignatureHash) {
+          taskID = toNumber(log.topics[1]); // Extract taskID from the first indexed topic
+          break;
+        }
+      }
+
+      if (taskID === null) {
+        throw new Error("Failed to get task ID from blockchain transaction");
+      }
+
+      console.log("Task created on blockchain with ID:", taskID);
+
       const response = await axios.post(
         "http://localhost:5002/api/tasks/create",
         {
           taskTitle,
-          taskID: 1,
+          taskID,
           taskDescription,
           coverImage: uploadedImageUrl,
           bounty,
-          deadline,
+          deadline: timestamp,
           creatorWalletAddress: address,
         },
         {

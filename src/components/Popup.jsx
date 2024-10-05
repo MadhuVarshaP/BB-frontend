@@ -5,6 +5,7 @@ import axios from "axios";
 import { useAccount } from "wagmi";
 
 const Popup = ({ bounty, onClose }) => {
+  const { contract } = useBountyContract();
   const [isClaimed, setIsClaimed] = useState(false); // State to track claim status
   const [loading, setLoading] = useState(false); // Loading state
   const [error, setError] = useState(null); // Error state
