@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import axios from "axios";
 import { useAccount } from "wagmi";
+import { useBountyContract } from "@/app/hooks/useBountyContract";
 
 const Popup = ({ bounty, onClose }) => {
   const { contract } = useBountyContract();
