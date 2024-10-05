@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useAccount } from "wagmi";
+import WorldCoinConnect from "./WorldIDconnect";
 
 const Navbar = () => {
   const { open } = useWeb3Modal();
@@ -32,12 +33,7 @@ const Navbar = () => {
             Profile
           </Link>
         </div>
-        <button
-          onClick={() => open()}
-          className="px-4 py-2 bg-white text-black font-medium rounded-full hover:bg-opacity-90"
-        >
-          {isConnected ? formatAddress(address) : "Connect Wallet"}
-        </button>
+        <WorldCoinConnect />
       </div>
     </nav>
   );

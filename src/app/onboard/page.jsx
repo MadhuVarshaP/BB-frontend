@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Image from "next/image";
@@ -24,6 +24,13 @@ function Onboard() {
     if (e) e.preventDefault();
     console.log(e, "Submited");
   };
+
+  // useEffect(() => {
+  const getSignature = () => {
+    const signature = localStorage.getItem("worldCoinId");
+    console.log(signature, "signature");
+  };
+  // });
 
   const handleUploadProfilePicture = async () => {
     if (!profilePicture) return;
@@ -88,7 +95,7 @@ function Onboard() {
           walletAddress: address, // Ensure this value is not undefined
           name: name,
           profilePictureUrl: uploadedImages,
-          worldcoinID: "asdadc",
+          worldcoinID: localStorage.getItem("worldCoinId"),
         },
         {
           headers: {
@@ -97,7 +104,7 @@ function Onboard() {
         }
       );
 
-      const worldcoinID = "asdadc";
+      const worldcoinID = localStorage.getItem("worldCoinId");
 
       // Call the registerUser function on the smart contract
       const tx = await contract.registerUser(worldcoinID, name, uploadedImages);
@@ -153,17 +160,6 @@ function Onboard() {
               />
             </div>
 
-            <button
-              onClick={uploadImagesToCloudinary} // Call the upload function first
-              className="w-full py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-semibold hover:opacity-90 transition mb-4"
-            >
-              Upload Profile Picture
-            </button>
-
-            <WorldIDconnect
-              userType={userType}
-              onSuccessCallback={handleOffsetSubmit}
-            />
             <button
               onClick={handleRegisterUser}
               className="w-full py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-semibold hover:opacity-90 transition"

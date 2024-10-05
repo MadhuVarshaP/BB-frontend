@@ -1,67 +1,97 @@
 "use client";
-import { VerificationLevel, IDKitWidget, useIDKit } from "@worldcoin/idkit";
-import type { ISuccessResult } from "@worldcoin/idkit";
-import { verify } from "../actions/verify";
-import React from "react";
 
-interface WorldIDconnectProps {
-  userType: "company" | "offsetter" | null;
-  onSuccessCallback: (e?: React.FormEvent) => void;
-}
+import React, { useEffect, useState } from "react";
+import { IDKitWidget, VerificationLevel } from "@worldcoin/idkit";
+// import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useWeb3Modal } from "@web3modal/wagmi/react";
+import { useAccount } from "wagmi";
 
-function WorldIDconnect({ userType, onSuccessCallback }: WorldIDconnectProps) {
-  const app_id = "app_3525bac1336a6c908981f421ffce04fa";
-  const action = "bounty";
-  if (!app_id) {
-    throw new Error("app_id is not set in environment variables!");
-  }
-  if (!action) {
-    throw new Error("action is not set in environment variables!");
-  }
+export default function WorldCoinConnect() {
+  const [worldcoinVerified, setWorldcoinVerified] = useState(false);
+  const [worldcoinId, setWorldcoinId] = useState<any>(null);
+  const { open } = useWeb3Modal();
+  const { address, isConnected } = useAccount();
 
-  const { setOpen } = useIDKit();
-
-  const onSuccess = (result: ISuccessResult) => {
-    console.log("Proof received from IDKit:\n", JSON.stringify(result));
+  // Function to format the wallet address
+  const formatAddress = (address) => {
+    if (!address) return "";
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
   };
-  const handleProof = async (result: ISuccessResult) => {
-    const data = await verify(result);
-    if (data.success) {
-      if (onSuccessCallback) {
-        onSuccessCallback();
-      }
-    } else {
-      throw new Error(`Verification failed: ${data.detail}`);
+
+  useEffect(() => {
+    const signature = localStorage.getItem("worldcoinSignature");
+    if (signature) {
+      setWorldcoinVerified(true);
+      const worldcoinSignature = JSON.parse(signature);
+      setWorldcoinId({
+        nullifier_hash: worldcoinSignature.message,
+      });
+      console.log("Loaded worldcoin");
+      localStorage.setItem(
+        "worldcoinSignature",
+        JSON.stringify(worldcoinSignature)
+      );
     }
+  }, [worldcoinVerified]);
+
+  const handleVerify = async (proof: any) => {
+    const response = await fetch("/api/verify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ proof }),
+    });
+    if (!response.ok) {
+      throw new Error(`Error verifying Worldcoin: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    setWorldcoinVerified(data.verified);
+  };
+
+  const handleSign = async (message: string) => {
+    console.log("Connected to Worldcoin");
+  };
+
+  const onSuccess = async (proof: any) => {
+    // Sign the verified nullifier hash and store in the localStorage
+    await handleSign(proof.nullifier_hash);
+    localStorage.setItem("worldCoinId", proof.nullifier_hash);
+    console.log(proof);
+    setWorldcoinId(proof);
   };
 
   return (
-    <div>
-      <IDKitWidget
-        action={action}
-        app_id={app_id}
-        onSuccess={onSuccess}
-        handleVerify={handleProof}
-        verification_level={VerificationLevel.Device}
-      />
-      <button
-        className="w-full py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-semibold hover:opacity-90 transition mb-4 flex items-center"
-        onClick={() => setOpen(true)}
-      >
-        <div className="mx-3 my-1 flex items-center">
-          <svg
-            className="w-5 h-5 mr-2 text-white"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-          >
-            <path d="M13.8 9a4 4 0 01-3.8 4h-1v3l-4-4 4-4v3h1a2 2 0 002-2V6a2 2 0 10-4 0H6a4 4 0 018 3z" />
-          </svg>
-          Verify with World ID
-        </div>
-      </button>
-    </div>
+    <>
+      {!worldcoinId ? (
+        <IDKitWidget
+          app_id="app_staging_f0111a769fbbfbc726f8ddd8bc4316ac"
+          action="verify_human" // this is your action id from the Developer Portal
+          onSuccess={onSuccess} // callback when the modal is closed
+          handleVerify={handleVerify} // optional callback when the proof is received
+          verification_level={VerificationLevel.Device}
+        >
+          {({ open }) => (
+            <button
+              className="flex items-center font-bold text-lg px-4 py-2 bg-black text-white rounded-md cursor-pointer"
+              onClick={open}
+            >
+              <img
+                src="https://i.ibb.co/P4mg2Z9/image.png"
+                alt=""
+                className="rounded-full h-8 w-8 mr-2"
+              />
+              Get Started
+            </button>
+          )}
+        </IDKitWidget>
+      ) : (
+        <button
+          onClick={() => open()}
+          className="px-4 py-2 bg-white text-black font-medium rounded-full hover:bg-opacity-90"
+        >
+          {isConnected ? formatAddress(address) : "Connect Wallet"}
+        </button>
+      )}
+    </>
   );
 }
-
-export default WorldIDconnect;
