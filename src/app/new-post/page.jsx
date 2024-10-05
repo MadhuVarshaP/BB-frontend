@@ -98,7 +98,7 @@ function NewPost() {
       console.log("Task created on blockchain with ID:", taskID);
 
       const response = await axios.post(
-        "http://localhost:5002/api/tasks/create",
+        "https://bb-backend-eight.vercel.app/api/tasks/create",
         {
           taskTitle,
           taskID,

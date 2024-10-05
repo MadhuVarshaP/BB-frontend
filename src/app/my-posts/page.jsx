@@ -19,7 +19,7 @@ export default function MyPosts() {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5002/api/tasks/tasksCreatedByUser?walletAddress=${address}`
+          `https://bb-backend-eight.vercel.app/api/tasks/tasksCreatedByUser?walletAddress=${address}`
         );
         setPosts(response.data.tasks); // Assuming the API returns an object with a 'tasks' property
       } catch (err) {

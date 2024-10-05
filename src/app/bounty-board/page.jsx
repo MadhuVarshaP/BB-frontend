@@ -25,7 +25,7 @@ export default function BountyBoard() {
     const fetchBounties = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5002/api/tasks/tasks?isClaimed=false"
+          "https://bb-backend-eight.vercel.app/api/tasks/tasks?isClaimed=false"
         );
         setBounties(response.data.tasks); // Assuming the API returns an object with a 'tasks' property
       } catch (err) {

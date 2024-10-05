@@ -83,7 +83,7 @@ function Onboard() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5002/api/user/createUser",
+        "https://bb-backend-eight.vercel.app/api/user/createUser",
         {
           walletAddress: address, // Ensure this value is not undefined
           name: name,

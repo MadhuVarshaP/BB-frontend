@@ -16,7 +16,7 @@ const Profile = () => {
     const fetchProfileData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5002/api/user/userProfile/${address}`
+          `https://bb-backend-eight.vercel.app/api/user/userProfile/${address}`
         );
         setProfileData(response.data.user);
         setProfileImage(response.data.user.profilePicture);

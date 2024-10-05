@@ -17,7 +17,7 @@ const VerificationPopup = ({ isOpen, onClose, bounty }) => {
     try {
       // Send request to verify proof
       const response = await axios.post(
-        "http://localhost:5002/api/tasks/verifyProof",
+        "https://bb-backend-eight.vercel.app/api/tasks/verifyProof",
         {
           taskID: bounty.taskID,
           verified: true,

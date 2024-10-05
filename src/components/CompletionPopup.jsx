@@ -30,7 +30,7 @@ const CompletionPopup = ({ bounty, isOpen, onClose }) => {
     try {
       // Send request to submit proof
       const response = await axios.post(
-        "http://localhost:5002/api/tasks/submitProof",
+        "https://bb-backend-eight.vercel.app/api/tasks/submitProof",
         {
           taskID: bounty.taskID,
           proofDescription,

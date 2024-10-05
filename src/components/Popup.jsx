@@ -19,7 +19,7 @@ const Popup = ({ bounty, onClose }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5002/api/tasks/claimTask",
+        "https://bb-backend-eight.vercel.app/api/tasks/claimTask",
         {
           taskID: bounty.taskID,
           claimantWalletAddress: address, // Replace this with dynamic wallet address
