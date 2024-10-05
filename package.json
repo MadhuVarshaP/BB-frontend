@@ -19,7 +19,7 @@
     "cloudinary": "^2.5.0",
     "connectkit": "^1.8.2",
     "ethers": "^6.13.3",
-    "graphql-request": "^7.1.0",
+    "graphql-request": "^6.1.0",
     "next": "14.2.13",
     "react": "^18",
     "react-dom": "^18",
