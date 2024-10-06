@@ -29,6 +29,6 @@
 ## Deployed Links
 
 - **Deployment**: [https://bb-frontend-lilac.vercel.app](https://bb-frontend-lilac.vercel.app), [https://bb-backend-eight.vercel.app/](https://bb-backend-eight.vercel.app/)
-- **Smart Contract Address**: 0x9DA4e2D13e36764D9fEf990Ac3a58A8Cb97066E6
+- **Smart Contract Address**: [0x9DA4e2D13e36764D9fEf990Ac3a58A8Cb97066E6](https://sepolia.scrollscan.com/address/0x9da4e2d13e36764d9fef990ac3a58a8cb97066e6)
 - **Subgraph**: [https://api.studio.thegraph.com/query/90328/bounty-bridge/version/latest](https://api.studio.thegraph.com/query/90328/bounty-bridge/version/latest)
 - **Live Demo**: [https://youtu.be/D8Q1L-rU7aQ](https://youtu.be/D8Q1L-rU7aQ)
