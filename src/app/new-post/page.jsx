@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { ethers, hexlify, parseEther, toNumber } from "ethers";
 import { useBountyContract } from "../hooks/useBountyContract";
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 function NewPost() {
   const { address } = useAccount();
