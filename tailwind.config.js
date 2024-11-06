@@ -12,9 +12,10 @@ module.exports = {
         foreground: "var(--foreground)",
       },
       fontFamily: {
-        poppins: ["Poppins"],
-      },
+        octaBrain: ['Octa Brain', 'sans-serif'],      
+       },
     },
   },
+
   plugins: [],
 };

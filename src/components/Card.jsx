@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import imageSample from "../public/assets/cycle.png"
 
 const Card = ({
   title,
@@ -12,26 +13,53 @@ const Card = ({
   onClaim,
 }) => {
   return (
-    <div className="bg-black border-2 border-gray-800 rounded-lg p-5 max-w-sm mx-auto">
-      <div className="relative w-full h-48 mb-5">
+<div
+      className="bg-[#F0F0F0] rounded-lg shadow-lg mx-auto p-6 relative overflow-hidden w-[450px] h-full pt-[90px]"
+      style={{ boxShadow: '12px 12px 0px rgba(217, 217, 217, 0.3)'
+      }} 
+    >
+      {/* Gradient Circle Decorations */}
+      <div className="absolute top-10 left-10 w-24 h-24 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full"></div>
+      <div className="absolute top-[220px] right-10 w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full"></div>
+
+      {/* Image */}
+      <div className="relative w-[280px] h-[190px] mx-auto mb-4 flex justify-center items-center">
         <Image
-          src={image}
+          src={imageSample}
           alt={title}
           layout="fill"
           objectFit="cover"
           className="rounded-lg"
         />
       </div>
-      <h2 className="text-xl font-bold text-white">{title}</h2>
-      <p className="text-gray-400 mt-2">{description}</p>
-      <p className="text-white mt-4">Bounty: {bountyCount}</p>
-      <p className="text-white">Deadline: {deadline}</p>
-      <button
-        className="mt-4 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-semibold hover:opacity-90 transition"
-        onClick={onClaim}
-      >
-        Claim
-      </button>
+
+      {/* Title */}
+      <h2 className="text-[30px] font-bold text-center mt-6 bg-clip-text text-transparent bg-gradient-to-r from-[#EC407A] to-[#6A1B9A]">
+        {title}
+      </h2>
+
+      {/* Description */}
+      <p className="text-gray-700 text-left my-4">
+        {description}
+      </p>
+
+      {/* Bounty and Deadline */}
+      <p className="text-[#6A1B9A] text-left mb-1">
+        Bounty: ${bountyCount}
+      </p>
+      <p className="text-[#6A1B9A] text-left mb-4">
+        Deadline: {deadline}
+      </p>
+
+      {/* Claim Button */}
+      <div className="flex justify-center">
+        <button
+          onClick={onClaim}
+          className=" w-[100px] py-2 bg-gradient-to-r from-[#E500FF] to-[#EC407A] text-white font-semibold rounded-full hover:opacity-90 transition"
+        >
+          Claim
+        </button>
+      </div>
     </div>
   );
 };

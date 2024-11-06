@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import Image from "next/image";
-import axios from "axios"; // Import Axios
-import illustration from "../../public/Illustration.png";
-import line from "../../public/line.png";
+import axios from "axios";
 import { useAccount } from "wagmi";
 import { useRouter } from "next/navigation";
 import { useBountyContract } from "../hooks/useBountyContract";
 import { toast, ToastContainer } from "react-toastify";
+import illustration from "../../public/user-onboard.png"; // User illustration
+import wave from "../../public/wave.png"; // Background wave image
 import "react-toastify/dist/ReactToastify.css";
 
 function Onboard() {
@@ -20,65 +20,6 @@ function Onboard() {
   const [profilePicture, setProfilePicture] = useState(null);
   const [profilePictureUrl, setProfilePictureUrl] = useState("");
   const [userType, setUserType] = useState("User");
-
-  const handleOffsetSubmit = async (e) => {
-    if (e) e.preventDefault();
-    console.log(e, "Submited");
-  };
-
-  // useEffect(() => {
-  const getSignature = () => {
-    const signature = localStorage.getItem("worldCoinId");
-    console.log(signature, "signature");
-  };
-  // });
-
-  const handleUploadProfilePicture = async () => {
-    if (!profilePicture) return;
-
-    const formData = new FormData();
-    formData.append("file", profilePicture);
-
-    try {
-      const response = await axios.post("/api/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      setProfilePictureUrl(response.data.url); // Set the profile picture URL
-      console.log("Profile picture uploaded successfully:", response.data.url);
-    } catch (error) {
-      console.error("Error uploading profile picture:", error);
-    }
-  };
-
-  const uploadImagesToCloudinary = async () => {
-    let uploadedImages;
-
-    // toast.info("Uploading images...");
-    // for (const image of images) {
-    const formData = new FormData();
-    formData.append("file", profilePicture);
-    formData.append("upload_preset", "ml_default");
-    formData.append("cloud_name", "dv0frgqvj");
-
-    try {
-      const response = await axios.post(
-        `https://api.cloudinary.com/v1_1/dv0frgqvj/image/upload`,
-        formData
-      );
-      uploadedImages = response.data.secure_url;
-    } catch (error) {
-      // toast.error("Image upload failed!");
-      console.error("Image upload failed:", error);
-    }
-    // }
-
-    // toast.success("Upload successful!");
-    console.log(uploadedImages);
-    return { uploadedImages };
-  };
 
   const handleRegisterUser = async () => {
     if (!address) {
@@ -93,25 +34,21 @@ function Onboard() {
       const response = await axios.post(
         "https://bb-backend-eight.vercel.app/api/user/createUser",
         {
-          walletAddress: address, // Ensure this value is not undefined
+          walletAddress: address,
           name: name,
           profilePictureUrl: uploadedImages,
           worldcoinID: localStorage.getItem("worldCoinId"),
         },
         {
-          headers: {
-            "Content-Type": "application/json", // Use JSON since we're sending a JSON payload
-          },
+          headers: { "Content-Type": "application/json" },
         }
       );
 
       const worldcoinID = localStorage.getItem("worldCoinId");
 
-      // Call the registerUser function on the smart contract
       const tx = await contract.registerUser(worldcoinID, name, uploadedImages);
       await tx.wait();
 
-      console.log("User registered successfully:", response.data);
       toast.success("User registered successfully!");
       route.push("/bounty-board");
     } catch (error) {
@@ -121,62 +58,62 @@ function Onboard() {
   };
 
   return (
-    <div className="bg-black min-h-screen font-poppins text-white">
-      <ToastContainer />
-      <Navbar />
-
-      <div className="flex flex-col items-center mt-10">
-        <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#1DE9B6] to-[#EC407A]">
+    <div className="bg-[#1A0334] min-h-screen font-octabrain text-white relative flex flex-col items-center justify-center">
+    <ToastContainer />
+  
+    {/* Background Wave */}
+    <div className="absolute top-0 w-full h-[350px] z-0 mx-0">
+      <Image src={wave} alt="Background Wave" layout="fill" objectFit="cover" />
+    </div>
+  
+    {/* Onboarding Content */}
+    <div className="relative z-10 mt-[300px] flex items-center space-x-10 p-6">
+      {/* Left Side - Form */}
+      <div className="flex flex-col items-center text-center space-y-6">
+        {/* Title */}
+        <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#1DE9B6] to-[#7481DC]">
           Welcome Onboard!
         </h2>
-
-        <div className="bg-[#f6f1ee] text-black mt-8 px-10 py-5 rounded-lg max-w-md w-full flex flex-col items-center">
-          <Image
-            src={illustration}
-            alt="Onboarding illustration"
-            width={400}
-            height={600}
-            className="mb-6"
+  
+        {/* Name Input */}
+        <label className="w-full max-w-md text-lg font-medium text-teal-300">
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full mt-2 p-3 border-2 border-[#1DE9B6] bg-transparent text-white focus:outline-none rounded-full"
+            placeholder="Enter your name"
           />
+        </label>
+  
 
-          <div className="w-full">
-            <div className="mb-4">
-              <label className="block text-lg font-medium">Name:</label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full p-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-              />
-            </div>
-
-            <div className="mb-6">
-              <label className="block text-lg font-medium">
-                Upload Profile Picture:
-              </label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => setProfilePicture(e.target.files[0])}
-                className="w-full p-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-              />
-            </div>
-
-            <button
-              onClick={handleRegisterUser}
-              className="w-full py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-semibold hover:opacity-90 transition"
-            >
-              Create User
-            </button>
-          </div>
-        </div>
-        <div className="flex justify-center my-[100px]">
-          <Image src={line} alt="line" width={150} />
-        </div>
-      </div>
-
-      <Footer />
+        <div class="relative p-3 border-2 rounded-full w-full border-[#1DE9B6]">
+  
+    <div class="absolute -top-3 left-4 bg-[#1A0334] px-2 text-[#1DE9B6] font-semibold">
+        Wallet Address
     </div>
+    <p class="text-white">
+    {address || "0xa7yhg...fjfh5i97"}
+    </p>
+</div>
+  
+        {/* Verify with Worldcoin Button */}
+        <button
+          onClick={handleRegisterUser}
+          className="p-2 bg-gradient-to-r from-[#E500FF] to-[#EC407A] text-white rounded-full hover:opacity-90 transition"
+        >
+          Verify with Worldcoin
+        </button>
+      </div>
+  
+      {/* Right Side - User Illustration */}
+      <div className="flex-shrink-0">
+        <Image src={illustration} alt="User Illustration" width={400} height={400} />
+      </div>
+    </div>
+  </div>
+  
+
   );
 }
 
