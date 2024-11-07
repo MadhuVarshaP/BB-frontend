@@ -105,7 +105,7 @@ export default function BountyBoard() {
 
   return (
     <div
-    className="bg-[#1A0334] min-h-screen font-poppins"
+    className="bg-[#1A0334] min-h-screen font-orbitron"
   >
     <Navbar />
   

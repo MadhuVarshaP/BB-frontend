@@ -46,7 +46,7 @@ export default function MyPosts() {
   }
 
   return (
-    <div className="bg-black min-h-screen font-poppins">
+    <div className="bg-black min-h-screen font-orbitron">
       <Navbar />
 
       <div className="py-10">

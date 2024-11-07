@@ -1,18 +1,26 @@
-import { Poppins } from "next/font/google";
+import { orbitrons } from "next/font/google";
 import "./globals.css";
 import { WagmiProvider, cookieToInitialState } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-// import { config } from "@/config";
 import WagmiProviderComp from "../context/wagmi-provider";
 import { headers } from "next/headers";
 import { config } from "../config";
+import { Orbitron } from '@next/font/google';
+import { Jost } from '@next/font/google';
 
 const queryClient = new QueryClient();
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+const orbitron = Orbitron({
+  subsets: ['latin'],   // Use 'latin' or other subsets you need
+  weight: ['400', '700'], // Include the font weights you need
+  variable: '--font-orbitron', // Define a CSS variable for the font
 });
+const jost = Jost({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'], // Adjust weights as needed
+  variable: '--font-jost', // Optional: adds CSS variable for the font
+});
+
 
 export const metadata = {
   title: "BountyBridge",
@@ -31,12 +39,13 @@ export default function RootLayout({ children }) {
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"></link>
         <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=orbitrons:wght@100;200;300;400;500;600;700;800;900&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className={poppins.className}>
+      <body className={`${orbitron.variable} ${jost.variable} bg-[#1A0334]`}>
         <WagmiProviderComp initialState={initialState}>
           {children}
         </WagmiProviderComp>

@@ -1,10 +1,13 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useBountyContract } from "../app/hooks/useBountyContract";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import imageSample from "../public/assets/cycle.png";
+import { IoCloudUploadSharp } from "react-icons/io5";
+import { RiUploadCloud2Fill } from "react-icons/ri";
 
 const CompletionPopup = ({ bounty, isOpen, onClose }) => {
   const { contract } = useBountyContract();
@@ -12,6 +15,8 @@ const CompletionPopup = ({ bounty, isOpen, onClose }) => {
   const [proofFile, setProofFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const fileInputRef = useRef(null);
+  
 
   if (!isOpen) return null;
   console.log(bounty);
@@ -19,6 +24,11 @@ const CompletionPopup = ({ bounty, isOpen, onClose }) => {
   const handleFileChange = (e) => {
     setProofFile(e.target.files[0]);
   };
+
+  const handleUploadClick = () => {
+    fileInputRef.current.click();
+  };
+  
 
   const uploadFileToCloudinary = async (file) => {
     const formData = new FormData();
@@ -85,63 +95,101 @@ const CompletionPopup = ({ bounty, isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm">
-      <ToastContainer /> {/* Toast for notifications */}
-      <div className="bg-[#BEBCB9] text-black p-6 rounded-lg max-w-lg w-full mx-4">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold">{bounty.title}</h2>
-        </div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-70 backdrop-blur-sm">
+    <div
+      className="bg-[#F0F0F0] font-jost rounded-lg shadow-lg p-6 relative overflow-hidden w-[750px] max-h-full pt-[90px]"
+      style={{ boxShadow: '12px 12px 0px rgba(217, 217, 217, 0.3)' }}
+    >
+      <div className="absolute top-9 left-12 w-24 h-24 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full"></div>
+      <div className="absolute top-[240px] right-[90px] w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full"></div>
 
-        <div className="relative w-full h-64 mb-6">
-          <Image
-            src={bounty.image}
-            alt={bounty.title}
-            layout="fill"
-            objectFit="cover"
-            className="rounded-lg"
-          />
-        </div>
-
-        <div className="mt-4">
-          <label className="block text-lg font-medium mb-2">
-            Completion Proof Description:
-          </label>
-          <textarea
-            value={proofDescription}
-            onChange={(e) => setProofDescription(e.target.value)}
-            className="w-full p-2 mb-4 bg-transparent text-black border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-gray-800"
-            placeholder="Describe how you completed the task"
-          />
-
-          <label className="block text-lg font-medium mb-2">
-            Proof File Upload:
-          </label>
-          <input
-            type="file"
-            onChange={handleFileChange}
-            className="w-full p-2 mb-4 bg-transparent text-black border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-          />
-        </div>
-
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-
-        <div className="flex justify-end mt-6 space-x-4">
-          <button
-            className="py-2 px-4 bg-gray-500 text-white rounded-full font-semibold hover:opacity-90 transition"
-            onClick={onClose}
-          >
-            Cancel
-          </button>
-          <button
-            className="py-2 px-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-semibold hover:opacity-90 transition"
-            onClick={handleSubmit}
-            disabled={loading}
-          >
-            {loading ? "Submitting..." : "Submit Proof"}
-          </button>
-        </div>
+      
+      <div className="relative w-[480px] h-[200px] mx-auto mb-4 flex justify-center items-center">
+        <Image
+          // src={bounty.coverImage}
+          src={imageSample}
+          alt={bounty.title}
+          layout="fill"
+          objectFit="cover"
+          className="rounded-lg"
+        />
       </div>
+
+      {/* Title */}
+      <h2 className="text-[30px] font-orbitron font-bold text-center mt-6 bg-clip-text text-transparent bg-gradient-to-r from-[#EC407A] to-[#6A1B9A]">
+        {bounty.title}
+        {/* Cycle Repair */}
+      </h2>
+
+      {/* Description */}
+      <p className="text-gray-700 text-left my-4">
+        {bounty.taskDescription}
+      </p>
+
+      {/* Bounty and Deadline */}
+      <p className="text-[#6A1B9A] text-left mb-1">
+        <strong>Bounty: </strong> ${bounty.bounty}
+      </p>
+      <p className="text-[#6A1B9A] text-left mb-1">
+        <strong>Deadline: </strong> {bounty.deadline}
+      </p>
+
+      <p className="text-[#6A1B9A] text-left mb-4">
+        <strong>Address: </strong>
+         {/* {bounty.address} */}
+         0x12..cgr6t7ch5t7yg8ih
+      </p>
+
+      <div className="bg-gray-200 rounded-full inline-flex p-2 text-gray-600">
+        <p>Posted 1 day ago</p>
+      </div>
+
+      <div className="m-3">
+                <label className="block text-lg font-medium bg-clip-text text-transparent bg-gradient-to-r from-[#E500FF] to-[#EC407A]">Completion Proof Description:</label>
+                <textarea
+                    value={proofDescription}
+                    onChange={(e) => setProofDescription(e.target.value)}
+                    className="w-full p-3 border-2 border-[#E500FF] rounded-lg bg-transparent text-black focus:outline-none mt-2"
+                    placeholder="Describe how you completed the task"
+                />
+      </div>
+
+                <div className="flex items-center border-2 border-[#E500FF] rounded-full px-4 py-2 m-3 space-x-2 "  onChange={handleUploadClick}>
+                    <RiUploadCloud2Fill className="w-[40px] h-[40px] text-black"/>
+                    <p className="bg-clip-text text-transparent bg-gradient-to-r from-[#E500FF] to-[#EC407A] font-medium">
+                    Proof File Upload
+                </p>
+                <input
+        type="file"
+        ref={fileInputRef} 
+        onChange={handleFileChange}
+        className="hidden"
+      />
+                </div>
+                
+   
+        <div className="flex flex-col mt-6 space-y-2">
+          {error && <p className="text-red-500 text-center">{error}</p>}
+          
+          <div className="flex justify-center space-x-5 font-orbitron">
+            <button className="border border-[#E500FF] text-black px-4 py-2 rounded-full p-[2px]  rounded-full" onClick={onClose}>
+               Close
+            </button>
+            <button
+              
+              className={`inline-flex py-2 px-4 bg-gradient-to-r from-[#E500FF] to-[#EC407A] text-white rounded-full hover:opacity-90 transition ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              onClick={handleSubmit}
+              disabled={loading}
+            >
+              {loading ? "Submitting..." : "Submit Proof"}
+            </button>
+
+          </div>
+        </div>
     </div>
+  </div>
   );
 };
 

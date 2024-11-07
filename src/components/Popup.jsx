@@ -56,22 +56,13 @@ const Popup = ({ bounty, onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-70 backdrop-blur-sm">
     <div
-      className="bg-[#F0F0F0] rounded-lg shadow-lg p-6 relative overflow-hidden w-[750px] max-h-full pt-[90px]"
+      className="bg-[#F0F0F0] font-jost rounded-lg shadow-lg p-6 relative overflow-hidden w-[750px] max-h-full pt-[90px]"
       style={{ boxShadow: '12px 12px 0px rgba(217, 217, 217, 0.3)' }}
     >
-      {/* Gradient Circle Decorations */}
       <div className="absolute top-9 left-12 w-24 h-24 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full"></div>
       <div className="absolute top-[240px] right-[90px] w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full"></div>
 
-      {/* Close Button
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 transition text-lg font-semibold"
-      >
-        ✕
-      </button> */}
-
-      {/* Image */}
+      
       <div className="relative w-[480px] h-[200px] mx-auto mb-4 flex justify-center items-center">
         <Image
           // src={bounty.coverImage}
@@ -84,7 +75,7 @@ const Popup = ({ bounty, onClose }) => {
       </div>
 
       {/* Title */}
-      <h2 className="text-[30px] font-bold text-center mt-6 bg-clip-text text-transparent bg-gradient-to-r from-[#EC407A] to-[#6A1B9A]">
+      <h2 className="text-[30px] font-orbitron font-bold text-center mt-6 bg-clip-text text-transparent bg-gradient-to-r from-[#EC407A] to-[#6A1B9A]">
         {/* {bounty.taskTitle} */}
         Cycle Repair
       </h2>
@@ -113,6 +104,10 @@ const Popup = ({ bounty, onClose }) => {
          0x12..cgr6t7ch5t7yg8ih
       </p>
 
+      <div className="bg-gray-200 rounded-full inline-flex p-2 text-gray-600">
+        <p>Posted 1 day ago</p>
+      </div>
+
       {/* Claim Status or Button */}
       {isClaimed ? (
         <p className="mt-6 text-green-600 font-semibold text-center">
@@ -122,23 +117,19 @@ const Popup = ({ bounty, onClose }) => {
         <div className="flex flex-col mt-6 space-y-2">
           {error && <p className="text-red-500 text-center">{error}</p>}
           
-          <div className="flex justify-center space-x-5">
-          <div classname="p-[2px] bg-gradient-to-r from-[#E500FF] to-[#EC407A] rounded-full">
-    <button classname="bg-white text-black px-4 py-2 rounded-full " onClick={onClose}>
-        Close
-    </button>
-</div>
-
+          <div className="flex justify-center space-x-5 font-orbitron">
+            <button className="border border-[#E500FF] text-black px-4 py-2 rounded-full p-[2px]  rounded-full" onClick={onClose}>
+               Close
+            </button>
             <button
               onClick={handleClaimBounty}
-              className={`w-[100px] py-2 bg-gradient-to-r from-[#E500FF] to-[#EC407A] text-white rounded-full hover:opacity-90 transition ${
+              className={`inline-flex py-2 px-4 bg-gradient-to-r from-[#E500FF] to-[#EC407A] text-white rounded-full hover:opacity-90 transition ${
                 loading ? "opacity-50 cursor-not-allowed" : ""
               }`}
               disabled={loading}
             >
-              {loading ? "Claiming..." : "Claim"}
+              {loading ? "Claiming..." : "Claim Bounty"}
             </button>
-
 
           </div>
         </div>

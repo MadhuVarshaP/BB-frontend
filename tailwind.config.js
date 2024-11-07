@@ -12,7 +12,8 @@ module.exports = {
         foreground: "var(--foreground)",
       },
       fontFamily: {
-        octaBrain: ['Octa Brain', 'sans-serif'],      
+        orbitron: ['var(--font-orbitron)', 'sans-serif'],  
+        jost: ['var(--font-jost)', 'sans-serif'],  
        },
     },
   },

@@ -46,12 +46,12 @@ export default function MyTasks() {
   }
 
   return (
-    <div className="bg-black min-h-screen font-poppins">
+    <div className="bg-[#1A0334] min-h-screen font-orbitron">
       <Navbar />
 
       <div className="py-10">
         <div className="text-center">
-          <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#1DE9B6] to-[#EC407A]">
+          <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#1DE9B6] to-[#7481DC] mx-auto">
             My Tasks
           </h1>
         </div>

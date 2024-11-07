@@ -14,7 +14,7 @@ const Card = ({
 }) => {
   return (
 <div
-      className="bg-[#F0F0F0] rounded-lg shadow-lg mx-auto p-6 relative overflow-hidden w-[450px] h-full pt-[90px]"
+      className="bg-[#F0F0F0] rounded-lg shadow-lg mx-auto p-6 relative overflow-hidden w-[450px] h-full pt-[90px] font-jost"
       style={{ boxShadow: '12px 12px 0px rgba(217, 217, 217, 0.3)'
       }} 
     >
@@ -34,7 +34,7 @@ const Card = ({
       </div>
 
       {/* Title */}
-      <h2 className="text-[30px] font-bold text-center mt-6 bg-clip-text text-transparent bg-gradient-to-r from-[#EC407A] to-[#6A1B9A]">
+      <h2 className="text-[30px] font-bold font-orbitron text-center mt-6 bg-clip-text text-transparent bg-gradient-to-r from-[#EC407A] to-[#6A1B9A]">
         {title}
       </h2>
 
@@ -52,10 +52,10 @@ const Card = ({
       </p>
 
       {/* Claim Button */}
-      <div className="flex justify-center">
+      <div className="flex justify-center font-orbitron">
         <button
           onClick={onClaim}
-          className=" w-[100px] py-2 bg-gradient-to-r from-[#E500FF] to-[#EC407A] text-white font-semibold rounded-full hover:opacity-90 transition"
+          className="  inline-flex py-2 px-4 bg-gradient-to-r from-[#E500FF] to-[#EC407A] text-white font-semibold rounded-full hover:opacity-90 transition"
         >
           Claim
         </button>

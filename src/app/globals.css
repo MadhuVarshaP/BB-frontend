@@ -25,13 +25,3 @@ body {
     text-wrap: balance;
   }
 }
-@font-face {
-  font-family: 'Octa Brain';
-  src: url('/fonts/Octa Brain.ttf') format('truetype'); /* Or .woff if you have that format */
-  font-weight: normal;
-  font-style: normal;
-}
-
-body {
-  font-family: 'Octa Brain', sans-serif;
-}
