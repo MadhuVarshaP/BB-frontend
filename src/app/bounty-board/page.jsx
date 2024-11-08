@@ -13,7 +13,7 @@ import axios from "axios"; // Import axios for making API calls
 // import Data from "@/components/Data";
 import { useQuery } from "@tanstack/react-query";
 import request, { gql } from "graphql-request";
-import bgimage from "../../public/bg-cubes.png";
+import bgPattern from "../../public/bg-pattern.png";
 
 const query = gql`
   {
@@ -105,11 +105,16 @@ export default function BountyBoard() {
 
   return (
     <div
-    className="bg-[#1A0334] min-h-screen font-orbitron"
+    className="bg-[#1A0334] min-h-screen font-orbitron relative" style={{
+      backgroundImage: `url(${bgPattern.src})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+    }}
   >
     <Navbar />
-  
-    <div className="py-10">
+    <div className="absolute inset-0 bg-[#1A0334] opacity-50 z-0"></div>
+    <div className="relative py-10">
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         <p className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#1DE9B6] to-[#7481DC] mx-auto">
           Bounty Board

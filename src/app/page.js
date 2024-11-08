@@ -30,7 +30,7 @@ const jost = Jost({
 
  const Home = () => {
    return (
-     <div className="font-orbitron bg-[#1A0334]">
+     <div className="font-orbitron bg-[#1A0334] relative z-20">
        <div className="min-h-screen bg-[#1A0334] text-white">
          <Navbar />
         {/* Decorative Cubes */}

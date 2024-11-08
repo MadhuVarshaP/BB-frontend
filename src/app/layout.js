@@ -7,6 +7,7 @@ import { headers } from "next/headers";
 import { config } from "../config";
 import { Orbitron } from '@next/font/google';
 import { Jost } from '@next/font/google';
+import bgPattern from "../public/bg-pattern.png";
 
 const queryClient = new QueryClient();
 
@@ -45,7 +46,13 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body className={`${orbitron.variable} ${jost.variable} bg-[#1A0334]`}>
+      <body className={`${orbitron.variable} ${jost.variable} bg-[#1A0334] `} style={{
+      backgroundImage: `url(${bgPattern.src})`,
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat',
+    }}>
+            <div className="absolute inset-0 bg-[#1A0334] opacity-50 z-0"></div>
+
         <WagmiProviderComp initialState={initialState}>
           {children}
         </WagmiProviderComp>

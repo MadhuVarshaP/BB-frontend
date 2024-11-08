@@ -7,6 +7,7 @@ import TaskCard from "../../components/TaskCard";
 import Image from "next/image";
 import line from "../../public/line.png";
 import { useAccount } from "wagmi";
+import bgPattern from "../../public/bg-pattern.png";
 
 export default function MyTasks() {
   const { address } = useAccount();
@@ -46,37 +47,52 @@ export default function MyTasks() {
   }
 
   return (
-    <div className="bg-[#1A0334] min-h-screen font-orbitron">
-      <Navbar />
+    <div
+  className="bg-[#1A0334] min-h-screen font-orbitron relative"
+  style={{
+    backgroundImage: `url(${bgPattern.src})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+  }}
+>
+  {/* Semi-transparent overlay for opacity effect */}
+  <div className="absolute inset-0 bg-[#1A0334] opacity-50 z-0"></div>
 
-      <div className="py-10">
-        <div className="text-center">
-          <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#1DE9B6] to-[#7481DC] mx-auto">
-            My Tasks
-          </h1>
-        </div>
+  {/* Content layer */}
+  <div className="relative z-10">
+    <Navbar />
 
-        <div className="mt-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {tasks.map((task) => (
-            <TaskCard
-              key={task.taskID} // Use taskID as key for uniqueness
-              title={task.taskTitle} // Assuming taskTitle exists in fetched data
-              taskID={task.taskID}
-              description={task.taskDescription} // Assuming taskDescription exists in fetched data
-              bounty={task.bounty} // Assuming bounty exists in fetched data
-              deadline={new Date(task.deadline).toLocaleDateString()} // Format date as needed
-              image={task.coverImage} // Assuming coverImage exists in fetched data
-              onComplete={() => handleComplete(task.taskID)} // Handle task completion
-            />
-          ))}
-        </div>
+    <div className="py-10">
+      <div className="text-center">
+        <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#1DE9B6] to-[#7481DC] mx-auto">
+          My Tasks
+        </h1>
       </div>
 
-      <div className="flex justify-center my-[100px]">
-        <Image src={line} alt="line" width={150} />
+      <div className="mt-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {tasks.map((task) => (
+          <TaskCard
+            key={task.taskID}
+            title={task.taskTitle}
+            taskID={task.taskID}
+            description={task.taskDescription}
+            bounty={task.bounty}
+            deadline={new Date(task.deadline).toLocaleDateString()}
+            image={task.coverImage}
+            onComplete={() => handleComplete(task.taskID)}
+          />
+        ))}
       </div>
-
-      <Footer />
     </div>
+
+    <div className="flex justify-center my-[100px]">
+      <Image src={line} alt="line" width={150} />
+    </div>
+
+    <Footer />
+  </div>
+</div>
+
   );
 }

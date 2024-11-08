@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
 import { useRef } from 'react';
 import Link from "next/link";
+import bgPattern from "../../public/bg-pattern.png";
 
 function NewPost() {
   const { address } = useAccount();
@@ -131,15 +132,22 @@ function NewPost() {
 
   return (
 
-    <div className="py-10 bg-[#1A0334] min-h-screen font-orbitron text-white relative flex flex-col items-center">
+    <div className="py-10 bg-[#1A0334] min-h-screen font-orbitron text-white relative flex flex-col items-center"
+    style={{
+      backgroundImage: `url(${bgPattern.src})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+    }}>
     <ToastContainer />
+    <div className="absolute inset-0 bg-[#1A0334] opacity-50 z-0"></div>
 
     <div className="absolute top-0 w-full h-[350px] z-0 mx-0">
         <Image src={wave} alt="Background Wave" layout="fill" objectFit="cover" />
     </div>
 
 
-    <div className="relative z-10 mt-[300px] flex flex-col items-center p-6 space-y-10">
+    <div className="relative z-10 mt-[250px] flex flex-col items-center p-6 space-y-10">
         <h2 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#1DE9B6] to-[#7481DC] ">
             Create a new Task
         </h2>
@@ -232,12 +240,6 @@ function NewPost() {
             </div>
         </div>
     </div>
-
-    <div className="flex justify-center my-[100px]">
-        <Image src={line} alt="line" width={150} />
-    </div>
-
-    <Footer />
 </div>
 
   );

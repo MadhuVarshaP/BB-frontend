@@ -16,13 +16,17 @@ const CompletionPopup = ({ bounty, isOpen, onClose }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
+  const [fileName, setFileName] = useState("");
   
 
   if (!isOpen) return null;
   console.log(bounty);
 
   const handleFileChange = (e) => {
-    setProofFile(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file) {
+      setFileName(file.name); 
+    }
   };
 
   const handleUploadClick = () => {
@@ -154,19 +158,45 @@ const CompletionPopup = ({ bounty, isOpen, onClose }) => {
                 />
       </div>
 
-                <div className="flex items-center border-2 border-[#E500FF] rounded-full px-4 py-2 m-3 space-x-2 "  onChange={handleUploadClick}>
-                    <RiUploadCloud2Fill className="w-[40px] h-[40px] text-black"/>
-                    <p className="bg-clip-text text-transparent bg-gradient-to-r from-[#E500FF] to-[#EC407A] font-medium">
-                    Proof File Upload
-                </p>
-                <input
+      {/* <div
+    className="flex items-center border-2 border-[#E500FF] rounded-full px-4 py-2 m-3 space-x-2 cursor-pointer"
+    onClick={handleUploadClick}  // Use onClick instead of onChange
+  >
+    <RiUploadCloud2Fill className="w-[40px] h-[40px] text-black" />
+    <p className="bg-clip-text text-transparent bg-gradient-to-r from-[#E500FF] to-[#EC407A] font-medium">
+      Proof File Upload
+    </p>
+    <input
+      type="file"
+      ref={fileInputRef}
+      onChange={handleFileChange}  // This handles the file selection
+      className="hidden"
+    />
+  </div> */}
+                
+                <div
+      className="flex items-center border-2 border-[#E500FF] rounded-full px-4 py-2 m-3 space-x-2 cursor-pointer"
+      onClick={handleUploadClick}  // Trigger file input dialog on div click
+    >
+      <RiUploadCloud2Fill className="w-[40px] h-[40px] text-black" />
+      <p className="bg-clip-text text-transparent bg-gradient-to-r from-[#E500FF] to-[#EC407A] font-medium">
+        Proof File Upload
+      </p>
+      
+      <input
         type="file"
-        ref={fileInputRef} 
-        onChange={handleFileChange}
+        ref={fileInputRef}
+        onChange={handleFileChange}  // Handle file selection
         className="hidden"
       />
-                </div>
-                
+      
+      {/* Conditionally render the file name if a file is selected */}
+      {fileName && (
+        <span className="ml-2 text-gray-600 truncate max-w-[200px]">
+          {fileName}
+        </span>
+      )}
+    </div>
    
         <div className="flex flex-col mt-6 space-y-2">
           {error && <p className="text-red-500 text-center">{error}</p>}

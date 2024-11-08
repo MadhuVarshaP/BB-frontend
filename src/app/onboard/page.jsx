@@ -11,6 +11,7 @@ import { toast, ToastContainer } from "react-toastify";
 import illustration from "../../public/user-onboard.png"; // User illustration
 import wave from "../../public/wave.png"; // Background wave image
 import "react-toastify/dist/ReactToastify.css";
+import bgPattern from "../../public/bg-pattern.png";
 
 function Onboard() {
   const { address } = useAccount();
@@ -58,8 +59,12 @@ function Onboard() {
   };
 
   return (
-    <div className="bg-[#1A0334] min-h-screen font-orbitron text-white relative flex flex-col items-center justify-center">
-    <ToastContainer />
+<div
+  className="min-h-screen font-orbitron text-white relative flex flex-col items-center justify-center"
+ 
+>
+<div className="absolute inset-0 bg-[#1A0334] opacity-50 z-0"></div>
+  <ToastContainer />
   
     <div className="absolute top-0 w-full h-[350px] z-0 mx-0">
       <Image src={wave} alt="Background Wave" layout="fill" objectFit="cover" />

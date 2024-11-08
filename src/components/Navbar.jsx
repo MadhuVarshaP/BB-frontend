@@ -16,7 +16,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-3 rounded-full m-10">
+    <nav className="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-3 rounded-full m-10 relative z-20">
       <div className="container mx-auto flex justify-between items-center">
         <p className="text-3xl font-bold">BountyBridge</p>
         <div className="flex space-x-8">
