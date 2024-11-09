@@ -6,7 +6,7 @@ import { FaSquareXTwitter } from "react-icons/fa6";
 function Footer() {
   return (
     <div>
-      <div className="flex mx-[50px] justify-between items-center">
+      <div className="flex mx-[50px] justify-between items-center relative z-20">
         <div className="flex flex-col space-y-4 ">
           <button className="px-3 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-medium hover:opacity-90 transition">
             Contact Us
@@ -24,7 +24,7 @@ function Footer() {
           </p>
         </div>
       </div>
-      <div className="mt-10 text-center font-jost">
+      <div className="mt-10 text-center font-jost relative z-20">
         <p className="text-white">© 2024 All rights reserved | BountyBridge</p>
       </div>
     </div>

@@ -104,90 +104,100 @@ export default function BountyBoard() {
   }
 
   return (
-    <div
-    className="bg-[#1A0334] min-h-screen font-orbitron relative" style={{
-      backgroundImage: `url(${bgPattern.src})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-    }}
-  >
-    <Navbar />
-    <div className="absolute inset-0 bg-[#1A0334] opacity-50 z-0"></div>
-    <div className="relative py-10">
-      <div className="max-w-6xl mx-auto flex items-center justify-between">
-        <p className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#1DE9B6] to-[#7481DC] mx-auto">
-          Bounty Board
-        </p>
+<div
+  className="bg-[#1A0334] min-h-screen font-orbitron relative"
+  style={{
+    backgroundImage: `url(${bgPattern.src})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+  }}
+>
+  <Navbar />
   
-        <Link
-          href="/new-post"
-          className="bg-gradient-to-r from-[#1DE9B6] to-[#7481DC] text-black py-2 px-4 rounded-full shadow hover:shadow-lg transition hover:opacity-90"
+  {/* Overlay for background darkening effect */}
+  <div className="absolute inset-0 bg-[#1A0334] opacity-50 z-0"></div>
+
+  <div className="relative py-10 px-4 sm:px-6 md:px-10 lg:px-20">
+    <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+      <p className="text-3xl sm:text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#1DE9B6] to-[#7481DC] mx-auto md:mx-0">
+        Bounty Board
+      </p>
+
+      <Link
+        href="/new-post"
+        className="bg-gradient-to-r from-[#1DE9B6] to-[#7481DC] text-black py-2 px-4 rounded-full shadow hover:shadow-lg transition hover:opacity-90 text-center"
+      >
+        + Create a New Post
+      </Link>
+    </div>
+
+    {/* Search and Filter Section */}
+    <div className="my-4 p-4 md:p-8 flex flex-col md:flex-row items-center justify-center space-y-4 md:space-x-4 rounded-lg">
+      <div className="flex items-center bg-transparent border-2 border-[#1DE9B6] rounded-full px-4 py-2 space-x-2 w-full max-w-2xl">
+        <FaSearch width={20} height={20} />
+        <input
+          type="text"
+          placeholder="Search Tasks"
+          className="bg-transparent text-white outline-none w-full placeholder-gray-300"
+        />
+      </div>
+      <button className="bg-gradient-to-r from-[#1DE9B6] to-[#7481DC] text-black py-2 px-4 rounded-full shadow hover:shadow-lg transition hover:opacity-90 w-full md:w-auto">
+        Search
+      </button>
+    </div>
+
+    {/* Filter Buttons */}
+    <div className="flex flex-wrap space-x-2 md:space-x-4 mt-4 justify-center">
+      {filterOptions.map((option) => (
+        <button
+          key={option}
+          onClick={() => setActiveFilter(option)}
+          className={
+            activeFilter === option
+              ? "bg-gradient-to-r from-[#1DE9B6] to-[#7481DC] text-black py-2 px-4 rounded-full shadow hover:shadow-lg transition hover:opacity-90"
+              : "border-2 border-[#1DE9B6] text-white px-4 py-2 rounded-full"
+          }
         >
-          + Create a New Post
-        </Link>
-      </div>
-      <div className="my-4 p-8 flex items-center justify-center space-x-4 rounded-lg">
-                <div className="flex items-center bg-transparent border-2 border-[#1DE9B6] rounded-full px-4 py-2 space-x-2 w-full max-w-2xl">
-                    <FaSearch width={20} height={20} />
-                    <input
-                        type="text"
-                        placeholder="Search Tasks"
-                        className="bg-transparent text-white outline-none w-full placeholder-gray-300"
-                    />
-                </div>
-                <button className="bg-gradient-to-r from-[#1DE9B6] to-[#7481DC] text-black py-2 px-4 rounded-full shadow hover:shadow-lg transition hover:opacity-90">
-                    Search
-                </button>
-            </div>
+          {option}
+        </button>
+      ))}
+    </div>
 
-            {/* Filter Buttons */}
-            <div className="flex space-x-4 mt-4 justify-center">
-                {filterOptions.map((option) => (
-                    <button
-                        key={option}
-                        onClick={() => setActiveFilter(option)}
-                        className={
-                            activeFilter === option
-                                ? "bg-gradient-to-r from-[#1DE9B6] to-[#7481DC] text-black py-2 px-4 rounded-full shadow hover:shadow-lg transition hover:opacity-90"
-                                : "border-2 border-[#1DE9B6] text-white px-4 py-2 rounded-full"
-                        }
-                    >
-                        {option}
-                    </button>
-                ))}
-            </div>
-
-      <div className="rounded-lg p-5 max-w-7xl mx-auto my-7">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {bounties.map((bounty) => (
-            <Card
-              key={bounty.id}
-              id={bounty.id}
-              title={bounty.title}
-              image={bounty.coverImage}
-              description="Task Description" // Placeholder, replace with actual description if available
-              deadline={bounty.deadline}
-              bountyCount={bounty.bounty}
-              address={bounty.creator}
-              contact="Contact Placeholder" // Placeholder, replace with actual contact if available
-              onClaim={() => setSelectedPost(bounty)}
-            />
-          ))}
-        </div>
+    {/* Bounties Grid Section */}
+    <div className="rounded-lg p-5  mx-auto my-7">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+        {bounties.map((bounty) => (
+          <Card
+            key={bounty.id}
+            id={bounty.id}
+            title={bounty.title}
+            image={bounty.coverImage}
+            description="Task Description" // Placeholder, replace with actual description if available
+            deadline={bounty.deadline}
+            bountyCount={bounty.bounty}
+            address={bounty.creator}
+            contact="Contact Placeholder" // Placeholder, replace with actual contact if available
+            onClaim={() => setSelectedPost(bounty)}
+          />
+        ))}
       </div>
     </div>
-  
-    <div className="flex justify-center my-[100px]">
-      <Image src={line} alt="line" width={150} />
-    </div>
-  
-    <Footer />
-  
-    {selectedPost && (
-      <Popup bounty={selectedPost} onClose={handleClosePost} />
-    )}
   </div>
+
+  {/* Decorative Line */}
+  <div className="flex justify-center my-10 md:my-20 relative z-20">
+    <Image src={line} alt="line" width={100} height={100} />
+  </div>
+
+  <Footer />
+
+  {/* Popup for Selected Bounty */}
+  {selectedPost && (
+    <Popup bounty={selectedPost} onClose={handleClosePost} />
+  )}
+</div>
+
   
   );
 }

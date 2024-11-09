@@ -14,7 +14,7 @@ const Card = ({
 }) => {
   return (
 <div
-      className="bg-[#F0F0F0] rounded-lg shadow-lg mx-auto p-6 relative overflow-hidden w-[450px] h-full pt-[90px] font-jost"
+      className="bg-[#F0F0F0] rounded-lg shadow-lg mx-auto p-6 relative overflow-hidden p-[80px] h-full pt-[90px] font-jost"
       style={{ boxShadow: '12px 12px 0px rgba(217, 217, 217, 0.3)'
       }} 
     >
